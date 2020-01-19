@@ -7,18 +7,19 @@ class QuizApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return QuizAppState();
+    return _QuizAppState();
   }
 }
 
-class QuizAppState extends State<QuizApp> {
+class _QuizAppState extends State<QuizApp> {
 
-  var questionIndex = 0;
+  var _questionIndex = 0;
 
-  void answerQuestion() {
-    questionIndex = questionIndex + 1;
+  void _answerQuestion() {
+    setState(() {
+      _questionIndex = _questionIndex + 1;
+    });
   }
-
 
   List<String> ques = ["1. In India, who heads the Department of Space?",
   "2. Who wrote Das Kapital?",
@@ -35,18 +36,18 @@ class QuizAppState extends State<QuizApp> {
         ),
         body: Column(
           children: [
-            Text(ques[questionIndex]),
+            Text(ques[_questionIndex]),
             RaisedButton(
               child: Text("Answer 1"),
-              onPressed: answerQuestion,
+              onPressed: _answerQuestion,
             ),
             RaisedButton(
               child: Text("Answer 2"),
-              onPressed: answerQuestion,
+              onPressed: _answerQuestion,
             ),
             RaisedButton(
               child: Text("Answer 3"),
-              onPressed: answerQuestion,
+              onPressed: _answerQuestion,
             )
           ],
         ),
