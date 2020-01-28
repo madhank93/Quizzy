@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_quiz/answer.dart';
-import 'package:flutter_quiz/question.dart';
+import 'package:flutter_quiz/quiz.dart';
+import 'package:flutter_quiz/result.dart';
 
 void main() => runApp(QuizApp());
 
@@ -12,7 +12,7 @@ class QuizApp extends StatefulWidget {
 }
 
 class _QuizAppState extends State<QuizApp> {
-  static const ques = [
+  static const _ques = [
     {
       "questionText": "1. In India, who heads the Department of Space?",
       "answers": ['The president', 'The prime minister', 'The defence minster'],
@@ -60,19 +60,13 @@ class _QuizAppState extends State<QuizApp> {
         appBar: AppBar(
           title: Text('Quizzy'),
         ),
-        body: _questionIndex < ques.length
-            ? Column(
-                children: [
-                  Question(ques[_questionIndex]['questionText']),
-                  ...(ques[_questionIndex]['answers'] as List<String>)
-                      .map((answer) {
-                    return Answer(_answerQuestion, answer);
-                  }).toList()
-                ],
+        body: _questionIndex < _ques.length
+            ? Quiz(
+                answerQuestion: _answerQuestion,
+                questionIndex: _questionIndex,
+                ques: _ques,
               )
-            : Center(
-                child: Text("Completed !!!"),
-              ),
+            : Result()
       ),
     );
   }
