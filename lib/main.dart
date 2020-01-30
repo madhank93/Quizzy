@@ -15,39 +15,53 @@ class _QuizAppState extends State<QuizApp> {
   static const _ques = [
     {
       "questionText": "1. In India, who heads the Department of Space?",
-      "answers": ['The president', 'The prime minister', 'The defence minster'],
-      "correct": 'The prime minister'
+      "answers": [
+        {'text': 'The president', 'score': 0},
+        {'text': 'The prime minister', 'score': 1},
+        {'text': 'The defence minster', 'score': 0}
+      ],
     },
     {
       "questionText": "2. Who wrote Das Kapital?",
-      "answers": ['Karl Marx', 'Friedrich Engels', 'Leon Trotsky'],
-      "correct": 'Karl Marx'
+      "answers": [
+        {'text': 'Karl Marx', 'score': 1},
+        {'text': 'Friedrich Engels', 'score': 0},
+        {'text': 'Leon Trotsky', 'score': 0}
+      ],
     },
     {
       "questionText": "3. Which pop album is the best selling of all time",
       "answers": [
-        'Thriller by Michael Jackson',
-        'The Beatles by The Beatles',
-        'Purple Rain by Prince and The Revolution'
+        {'text': 'Thriller by Michael Jackson', 'score': 1},
+        {'text': 'The Beatles by The Beatles', 'score': 0},
+        {'text': 'Purple Rain by Prince and The Revolution', 'score': 0}
       ],
-      "correct": 'Thriller by Michael Jackson'
     },
     {
       "questionText":
           "4. Who directed the epic historical drama Schindler\'s List in 1993?",
-      "answers": ['James Cameron', 'Martin Scorsese', 'Steven Spielberg'],
-      "correct": 'Steven Spielberg'
+      "answers": [
+        {'text': 'James Cameron', 'score': 0},
+        {'text': 'Martin Scorsese', 'score': 0},
+        {'text': 'Steven Spielberg', 'score': 1}
+      ],
     },
     {
       "questionText":
           "5. Which boxer inflicted Muhammad Ali\'s first defeat in professional boxing?",
-      "answers": ['Rocky Marciano', 'Joe Frazier', 'Joe Louis'],
-      "correct": 'Joe Frazier'
+      "answers": [
+        {'text': 'Rocky Marciano', 'score': 0},
+        {'text': 'Joe Frazier', 'score': 1},
+        {'text': 'Joe Louis', 'score': 0}
+      ],
     }
   ];
   var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore = _totalScore + score;
+
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
@@ -56,18 +70,18 @@ class _QuizAppState extends State<QuizApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Quizzy'),
-        ),
-        body: _questionIndex < _ques.length
-            ? Quiz(
-                answerQuestion: _answerQuestion,
-                questionIndex: _questionIndex,
-                ques: _ques,
-              )
-            : Result()
-      ),
+          appBar: AppBar(
+            title: Text('Quizzy'),
+          ),
+          body: _questionIndex < _ques.length
+              ? Quiz(
+                  answerQuestion: _answerQuestion,
+                  questionIndex: _questionIndex,
+                  ques: _ques,
+                )
+              : Result(_totalScore)),
     );
   }
 }
